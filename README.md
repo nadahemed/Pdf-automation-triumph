@@ -33,7 +33,8 @@
 
 ### 🎯 **Traitement PDF Intelligent**
 - 🔍 **Détection automatique** de textes spécifiques dans les PDFs
-- 📐 **Placement précis** du texte BIN selon les coordonnées détectées
+- ✏️ **Message personnalisable** - Saisissez votre propre texte à ajouter
+- 📐 **Placement précis** selon les coordonnées détectées
 - 📦 **Traitement par lots** de plusieurs fichiers simultanément
 - 📖 **Extraction de texte** avec PDF.js pour analyse intelligente
 
@@ -45,6 +46,7 @@
 
 ### 🛠️ **Fonctionnalités Avancées**
 - 🎯 **Drag & Drop** intuitif pour l'upload de fichiers
+- ✏️ **Message personnalisable** - Saisissez votre propre texte à ajouter
 - ⏱️ **Barre de progression** en temps réel
 - 🚨 **Gestion d'erreurs** robuste avec feedback utilisateur
 - 🔄 **Téléchargement séquentiel** pour éviter les conflits
@@ -140,20 +142,56 @@ open index.html
 
 ---
 
+## ✏️ Message Personnalisé
+
+### 🎯 **Fonctionnalité de Personnalisation**
+
+L'application vous permet de **saisir votre propre message** à ajouter aux PDFs au lieu d'utiliser le texte par défaut "(BIN : XXXXX)".
+
+### 📝 **Comment utiliser**
+
+1. **Sélectionnez vos fichiers PDF** (comme d'habitude)
+2. **Zone de configuration** apparaît automatiquement
+3. **Saisissez votre message** dans le champ dédié
+4. **Laissez vide** pour utiliser le message par défaut
+5. **Traitez les fichiers** - votre message personnalisé sera ajouté
+
+### 🎨 **Exemples de Messages**
+
+```text
+Message par défaut : (BIN : XXXXX)
+Vos messages :
+- (APPROUVÉ : 2024-01-15)
+- (TRAITÉ PAR : Service Comptabilité)
+- (VALIDÉ : Direction Financière)
+- (ARCHivé : DOC-2024-001)
+```
+
+### ⚙️ **Caractéristiques Techniques**
+
+- **Longueur maximale** : 50 caractères
+- **Position automatique** : Juste en dessous du texte détecté
+- **Style identique** : Police, taille et couleur cohérentes
+- **Sauvegarde automatique** : Message conservé pendant la session
+
+---
+
 ## 🎯 Utilisation
 
 ### 📤 **Workflow Complet**
 
 1. **🏠 Accueil** → Découvrez les fonctionnalités
 2. **📤 Upload** → Glissez vos fichiers PDF
-3. **⚙️ Traitement** → Détection et modification automatiques
-4. **🛒 Panier** → Téléchargement des fichiers modifiés
-5. **📞 Contact** → Informations Triumph International
+3. **✏️ Configuration** → Saisissez votre message personnalisé (optionnel)
+4. **⚙️ Traitement** → Détection et modification automatiques
+5. **🛒 Panier** → Téléchargement des fichiers modifiés
+6. **📞 Contact** → Informations Triumph International
 
 ### 🎨 **Fonctionnalités Clés**
 
 - 🔍 **Détection intelligente** des textes spécifiques
-- 📐 **Placement automatique** du texte BIN
+- ✏️ **Message personnalisable** - Saisissez votre propre texte
+- 📐 **Placement automatique** selon vos préférences
 - 🛒 **Panier de téléchargement** indépendant
 - 📱 **Design responsive** pour mobile et desktop
 

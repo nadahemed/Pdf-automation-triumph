@@ -99,16 +99,34 @@ function clearFiles() {
     // Vider le panier
     cartItems = [];
     updateCartDisplay();
+
+    // Réinitialiser le champ de message
+    const customMessageInput = document.getElementById('customMessage');
+    if (customMessageInput) {
+        customMessageInput.value = '';
+    }
 }
 
 // Fonction pour mettre à jour les boutons
 function updateButtons() {
+    const messageConfig = document.getElementById('messageConfig');
+
     if (selectedFiles.length > 0) {
         processBtn.classList.remove('hidden');
         clearBtn.classList.remove('hidden');
+
+        // Afficher la zone de configuration du message
+        if (messageConfig) {
+            messageConfig.style.display = 'block';
+        }
     } else {
         processBtn.classList.add('hidden');
         clearBtn.classList.add('hidden');
+
+        // Masquer la zone de configuration du message
+        if (messageConfig) {
+            messageConfig.style.display = 'none';
+        }
     }
 }
 
@@ -135,11 +153,16 @@ async function processFiles() {
     isProcessing = true;
     processBtn.disabled = true;
     processBtn.innerHTML = '<span class="spinner"></span> Traitement...';
-    
+
     // Afficher la section de traitement
     processingSection.classList.remove('hidden');
     resultsSection.classList.add('hidden');
-    
+
+    // Récupérer le message personnalisé
+    const customMessageInput = document.getElementById('customMessage');
+    const customMessage = customMessageInput ? customMessageInput.value.trim() : '';
+    const finalMessage = customMessage || ' (BIN : XXXXX)';
+
     const results = [];
     const documents = [];
     const documentNames = [];
@@ -330,15 +353,15 @@ async function processFiles() {
                         }
                     }
                     
-                    // Insérer le texte BIN (comme dans votre script)
-                    page.drawText(' (BIN : XXXXX)', {
+                    // Insérer le message personnalisé (comme dans votre script)
+                    page.drawText(finalMessage, {
                         x: xPos,
                         y: yPos,
                         size: 9,
                         color: PDFLib.rgb(0, 0, 0),
                     });
-                    
-                    console.log(`Texte BIN ajouté à ${documentNames[i]} aux coordonnées (${xPos}, ${yPos}) - En haut du PDF`);
+
+                    console.log(`Message "${finalMessage}" ajouté à ${documentNames[i]} aux coordonnées (${xPos}, ${yPos}) - En haut du PDF`);
                 }
                 
                 // Sauvegarder le PDF modifié
@@ -728,5 +751,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const cartContainer = document.getElementById('cartContainer');
     if (cartContainer) {
         cartContainer.style.display = 'inline-block';
+    }
+
+    // Masquer la zone de configuration du message au démarrage
+    const messageConfig = document.getElementById('messageConfig');
+    if (messageConfig) {
+        messageConfig.style.display = 'none';
     }
 });

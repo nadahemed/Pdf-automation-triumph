@@ -94,17 +94,26 @@
             <!-- Section Upload/Traitement -->
             <section id="upload-section" class="section-content">
                 <div class="upload-section">
-                <div class="upload-area" id="uploadArea">
-                    <div class="upload-content">
-                        <div style="font-size: 3rem; color: #667eea; margin-bottom: 20px;">📁</div>
-                        <h3>Glissez-déposez vos fichiers PDF ici</h3>
-                        <p>ou cliquez pour sélectionner des fichiers</p>
-                        <input type="file" id="fileInput" multiple accept=".pdf" hidden>
-                        <button class="btn-primary" onclick="document.getElementById('fileInput').click()">
-                            📂 Sélectionner des fichiers
-                        </button>
+                    <!-- Zone de configuration du message -->
+                    <div class="message-config" id="messageConfig" style="display: none;">
+                        <div class="message-input-container">
+                            <label for="customMessage">Message à ajouter :</label>
+                            <input type="text" id="customMessage" placeholder="Ex: (BIN : XXXXX)" maxlength="50">
+                            <small>Laissez vide pour utiliser le message par défaut</small>
+                        </div>
                     </div>
-                </div>
+
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-content">
+                            <div style="font-size: 3rem; color: #667eea; margin-bottom: 20px;">📁</div>
+                            <h3>Glissez-déposez vos fichiers PDF ici</h3>
+                            <p>ou cliquez pour sélectionner des fichiers</p>
+                            <input type="file" id="fileInput" multiple accept=".pdf" hidden>
+                            <button class="btn-primary" onclick="document.getElementById('fileInput').click()">
+                                📂 Sélectionner des fichiers
+                            </button>
+                        </div>
+                    </div>
                 
                 <div class="file-list hidden" id="fileList">
                     <h3>📋 Fichiers sélectionnés</h3>

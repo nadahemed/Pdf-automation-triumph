@@ -400,6 +400,52 @@ main {
     margin-bottom: 30px;
 }
 
+/* Zone de configuration du message */
+.message-config {
+    background: linear-gradient(135deg, rgba(0, 35, 149, 0.1), rgba(237, 41, 57, 0.1));
+    border: 2px solid #002395;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 25px;
+    text-align: left;
+}
+
+.message-input-container {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.message-input-container label {
+    display: block;
+    font-weight: 600;
+    color: #002395;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.message-input-container input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 2px solid #e1e5e9;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    margin-bottom: 8px;
+}
+
+.message-input-container input:focus {
+    outline: none;
+    border-color: #002395;
+    box-shadow: 0 0 0 3px rgba(0, 37, 149, 0.1);
+}
+
+.message-input-container small {
+    color: #666;
+    font-size: 0.85rem;
+    display: block;
+}
+
         .upload-area {
             border: 3px dashed #002395;
             border-radius: 15px;
