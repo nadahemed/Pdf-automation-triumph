@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traitement de Factures PDF</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Header avec navigation et panier -->
+        <header class="main-header">
+            <div class="header-container">
+                <!-- Navigation principale -->
+                <nav class="main-nav">
+                    <div class="nav-brand">
+                        <img src="assets/images/triumph-international-logo-png-transparent.png" alt="Triumph International" class="nav-logo">
+                        <span class="nav-title">Triumph International</span>
+                    </div>
+
+                    <div class="nav-tabs">
+                        <button class="nav-tab active" data-section="home">
+                            <i class="fas fa-home"></i>
+                            Accueil
+                        </button>
+                        <button class="nav-tab" data-section="upload">
+                            <i class="fas fa-upload"></i>
+                            Traitement PDF
+                        </button>
+                        <button class="nav-tab" data-section="about">
+                            <i class="fas fa-info-circle"></i>
+                            À propos
+                        </button>
+                        <button class="nav-tab" data-section="contact">
+                            <i class="fas fa-envelope"></i>
+                            Contact
+                        </button>
+                    </div>
+                </nav>
+
+                <!-- Panier de téléchargement indépendant -->
+                <div class="cart-section">
+                    <div id="cartContainer" class="cart-container">
+                        <button id="cartBtn" class="cart-btn" onclick="toggleCart()">
+                            <i class="fas fa-shopping-cart"></i>
+                            <span id="cartCount" class="cart-count">0</span>
+                            <span class="cart-label">Panier</span>
+                        </button>
+                        <div id="cartDropdown" class="cart-dropdown">
+                            <div class="cart-header">
+                                <h4>🛒 Panier de téléchargement</h4>
+                                <button onclick="downloadAllFiles()" class="download-all-btn">
+                                    <i class="fas fa-download"></i>
+                                    Tout télécharger
+                                </button>
+                            </div>
+                            <div id="cartItems" class="cart-items">
+                                <!-- Les éléments du panier apparaîtront ici -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Sections principales -->
+        <main class="main-sections">
+            <!-- Section Accueil -->
+            <section id="home-section" class="section-content active">
+                <div class="hero-section">
+                    <h2>Bienvenue chez Triumph International</h2>
+                    <p class="hero-subtitle">Leader mondial de la lingerie fine depuis 1886</p>
+                    <div class="hero-features">
+                        <div class="feature-card">
+                            <i class="fas fa-file-pdf"></i>
+                            <h3>Traitement PDF Automatique</h3>
+                            <p>Ajout automatique des informations BIN sur vos factures</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-robot"></i>
+                            <h3>Détection Intelligente</h3>
+                            <p>Localisation automatique des zones d'insertion</p>
+                        </div>
+                        <div class="feature-card">
+                            <i class="fas fa-download"></i>
+                            <h3>Téléchargement Rapide</h3>
+                            <p>Récupération instantanée des fichiers modifiés</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section Upload/Traitement -->
+            <section id="upload-section" class="section-content">
+                <div class="upload-section">
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-content">
+                        <div style="font-size: 3rem; color: #667eea; margin-bottom: 20px;">📁</div>
+                        <h3>Glissez-déposez vos fichiers PDF ici</h3>
+                        <p>ou cliquez pour sélectionner des fichiers</p>
+                        <input type="file" id="fileInput" multiple accept=".pdf" hidden>
+                        <button class="btn-primary" onclick="document.getElementById('fileInput').click()">
+                            📂 Sélectionner des fichiers
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="file-list hidden" id="fileList">
+                    <h3>📋 Fichiers sélectionnés</h3>
+                    <div id="filesContainer"></div>
+                </div>
+
+                <div class="processing-section hidden" id="processingSection">
+                    <div class="progress-container">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="progressFill"></div>
+                        </div>
+                        <p id="progressText">Traitement en cours...</p>
+                    </div>
+                </div>
+
+                <div class="results-section hidden" id="resultsSection">
+                    <h3>✅ Traitement terminé</h3>
+                    <div id="debugInfo" class="debug-section hidden">
+                        <h4>📊 Informations de traitement</h4>
+                        <div id="textContent" class="debug-section" style="margin-bottom: 15px;">
+                            <h5>📄 Contenu du PDF extrait</h5>
+                            <div id="textContainer"></div>
+                        </div>
+                        <div id="debugContainer"></div>
+                    </div>
+                    <div id="resultsContainer"></div>
+                </div>
+
+                <div class="upload-actions">
+                    <button class="btn-secondary" id="clearBtn" onclick="clearFiles()">
+                        🗑️ Effacer la sélection
+                    </button>
+                    <button class="btn-primary" id="processBtn" onclick="processFiles()">
+                        🚀 Traiter les fichiers
+                    </button>
+                </div>
+                </div>
+            </section>
+
+            <!-- Section À propos -->
+            <section id="about-section" class="section-content">
+                <div class="about-section">
+                    <div class="about-content">
+                        <h2>À propos de Triumph International</h2>
+                        <p class="about-intro">
+                            Depuis 1886, Triumph International est le leader mondial de la lingerie fine,
+                            offrant des produits de qualité supérieure dans plus de 120 pays.
+                        </p>
+
+                        <div class="about-grid">
+                            <div class="about-card">
+                                <i class="fas fa-history"></i>
+                                <h3>1886 - Fondation</h3>
+                                <p>Création de l'entreprise à Heubach, Allemagne par Johann Gottfried Spiesshofer et Michael Braun.</p>
+                            </div>
+                            <div class="about-card">
+                                <i class="fas fa-globe"></i>
+                                <h3>Présence Mondiale</h3>
+                                <p>Plus de 120 pays, 45 000 points de vente et une présence digitale mondiale.</p>
+                            </div>
+                            <div class="about-card">
+                                <i class="fas fa-award"></i>
+                                <h3>Innovation</h3>
+                                <p>Pionnier dans les technologies textiles et les designs innovants pour le bien-être des femmes.</p>
+                            </div>
+                            <div class="about-card">
+                                <i class="fas fa-heart"></i>
+                                <h3>Engagement</h3>
+                                <p>Engagé pour la durabilité, l'inclusion et l'autonomisation des femmes à travers le monde.</p>
+                            </div>
+                        </div>
+
+                        <div class="stats-section">
+                            <div class="stat-item">
+                                <span class="stat-number">135+</span>
+                                <span class="stat-label">Années d'expérience</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">120+</span>
+                                <span class="stat-label">Pays</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">45K+</span>
+                                <span class="stat-label">Points de vente</span>
+                            </div>
+                            <div class="stat-item">
+                                <span class="stat-number">2M+</span>
+                                <span class="stat-label">Clientes satisfaites</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Section Contact -->
+            <section id="contact-section" class="section-content">
+                <div class="contact-section">
+                    <h2>Contactez-nous</h2>
+                    <p class="contact-intro">Une question ? Un partenariat ? Nous sommes là pour vous aider.</p>
+
+                    <div class="contact-grid">
+                        <div class="contact-card">
+                            <div class="contact-header">
+                                <i class="fas fa-headset"></i>
+                                <h3>Support Client</h3>
+                            </div>
+                            <p>Nos équipes sont disponibles pour répondre à toutes vos questions concernant nos produits et services.</p>
+                            <div class="contact-info">
+                                <p><i class="fas fa-phone"></i> +33 1 42 86 15 00</p>
+                                <p><i class="fas fa-envelope"></i> support@triumph.fr</p>
+                                <p><i class="fas fa-clock"></i> Lun-Ven: 9h-18h</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-card">
+                            <div class="contact-header">
+                                <i class="fas fa-handshake"></i>
+                                <h3>Partenariats</h3>
+                            </div>
+                            <p>Développez votre activité avec Triumph. Découvrez nos opportunités de partenariat.</p>
+                            <div class="contact-info">
+                                <p><i class="fas fa-envelope"></i> partnerships@triumph.com</p>
+                                <p><i class="fas fa-users"></i> Équipe commerciale dédiée</p>
+                            </div>
+                        </div>
+
+                        <div class="contact-card">
+                            <div class="contact-header">
+                                <i class="fas fa-store"></i>
+                                <h3>Points de vente</h3>
+                            </div>
+                            <p>Trouvez le point de vente Triumph le plus proche de chez vous.</p>
+                            <div class="contact-info">
+                                <p><i class="fas fa-map-marker-alt"></i> + de 45 000 points de vente</p>
+                                <p><i class="fas fa-globe"></i> Présence mondiale</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quick-contact">
+                        <h3>Formulaire de contact rapide</h3>
+                        <button class="contact-btn-large" onclick="showContactForm()">
+                            <i class="fas fa-paper-plane"></i>
+                            Nous écrire
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>🏢 Triumph International</h3>
+                    <p>Leader mondial de la lingerie fine depuis 1886</p>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/triumph_lingerie" target="_blank" class="social-link">
+                            <i class="fab fa-instagram"></i>
+                            Instagram
+                        </a>
+                        <a href="https://www.facebook.com/TriumphLingerie" target="_blank" class="social-link">
+                            <i class="fab fa-facebook"></i>
+                            Facebook
+                        </a>
+                        <a href="https://www.linkedin.com/company/triumph-international" target="_blank" class="social-link">
+                            <i class="fab fa-linkedin"></i>
+                            LinkedIn
+                        </a>
+                    </div>
+                </div>
+
+                <div class="footer-section">
+                    <h3>📍 Localisation</h3>
+                    <div class="map-container">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.142103045!2d2.2945!3d48.8566!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66e1f06e2b70f%3A0x40b82c3688c9460!2sTriumph%20International!5e0!3m2!1sfr!2sfr!4v1640000000000!5m2!1sfr!2sfr"
+                            width="100%"
+                            height="200"
+                            style="border:0; border-radius: 10px;"
+                            allowfullscreen=""
+                            loading="lazy">
+                        </iframe>
+                    </div>
+                    <p>Siège social : Munich, Allemagne</p>
+                </div>
+
+                <div class="footer-section">
+                    <h3>📞 Contact</h3>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+33 1 42 86 15 00</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>contact@triumph.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-globe"></i>
+                            <span>www.triumph.com</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>75008 Paris, France</span>
+                        </div>
+                    </div>
+                    <button class="contact-btn" onclick="showContactForm()">
+                        <i class="fas fa-paper-plane"></i>
+                        Nous contacter
+                    </button>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 Triumph International & Maroc Modis - Traitement de Factures PDF</p>
+                <p>Application développée avec ❤️ pour l'automatisation documentaire</p>
+                <div class="footer-links">
+                    <a href="#privacy">Politique de confidentialité</a>
+                    <a href="#terms">Conditions d'utilisation</a>
+                    <a href="#support">Support</a>
+                </div>
+            </div>
+
+            <!-- Modal de contact -->
+            <div id="contactModal" class="contact-modal">
+                <div class="contact-modal-content">
+                    <span class="close" onclick="closeContactForm()">&times;</span>
+                    <h2>📧 Nous contacter</h2>
+                    <form id="contactForm" class="contact-form">
+                        <div class="form-group">
+                            <label for="name">Nom *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Sujet</label>
+                            <select id="subject" name="subject">
+                                <option value="support">Support technique</option>
+                                <option value="business">Partenariat</option>
+                                <option value="feedback">Retour d'expérience</option>
+                                <option value="other">Autre</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Message *</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-paper-plane"></i>
+                            Envoyer le message
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- PDF-lib pour le traitement des PDFs -->
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <!-- PDF.js pour l'extraction de texte -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <!-- Notre script JavaScript -->
+    <script src="script.js"></script>
+</body>
+</html>
