@@ -100,10 +100,19 @@ function clearFiles() {
     cartItems = [];
     updateCartDisplay();
 
-    // Réinitialiser le champ de message
+    // Réinitialiser les champs de message et de dates
     const customMessageInput = document.getElementById('customMessage');
+    const actualStartInput = document.getElementById('actualStart');
+    const actualFinishInput = document.getElementById('actualFinish');
+    
     if (customMessageInput) {
         customMessageInput.value = '';
+    }
+    if (actualStartInput) {
+        actualStartInput.value = '';
+    }
+    if (actualFinishInput) {
+        actualFinishInput.value = '';
     }
 }
 
@@ -158,10 +167,23 @@ async function processFiles() {
     processingSection.classList.remove('hidden');
     resultsSection.classList.add('hidden');
 
-    // Récupérer le message personnalisé
+    // Récupérer le message personnalisé et les dates
     const customMessageInput = document.getElementById('customMessage');
+    const actualStartInput = document.getElementById('actualStart');
+    const actualFinishInput = document.getElementById('actualFinish');
+    
     const customMessage = customMessageInput ? customMessageInput.value.trim() : '';
-    const finalMessage = customMessage || ' (BIN : XXXXX)';
+    const actualStart = actualStartInput ? actualStartInput.value : '';
+    const actualFinish = actualFinishInput ? actualFinishInput.value : '';
+    
+    // Construire le message final avec les dates si elles sont fournies
+    let finalMessage = customMessage || ' (BIN : XXXXX)';
+    if (actualStart || actualFinish) {
+        let dateInfo = '';
+        if (actualStart) dateInfo += ` Actual Start: ${actualStart}`;
+        if (actualFinish) dateInfo += ` Actual Finish: ${actualFinish}`;
+        finalMessage += dateInfo;
+    }
 
     const results = [];
     const documents = [];

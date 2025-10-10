@@ -101,6 +101,17 @@
                             <input type="text" id="customMessage" placeholder="Ex: (BIN : XXXXX)" maxlength="50">
                             <small>Laissez vide pour utiliser le message par défaut</small>
                         </div>
+                        
+                        <div class="date-inputs-container">
+                            <div class="date-input-group">
+                                <label for="actualStart">Actual Start :</label>
+                                <input type="date" id="actualStart" name="actualStart">
+                            </div>
+                            <div class="date-input-group">
+                                <label for="actualFinish">Actual Finish :</label>
+                                <input type="date" id="actualFinish" name="actualFinish">
+                            </div>
+                        </div>
                     </div>
 
                     <div class="upload-area" id="uploadArea">
@@ -133,7 +144,7 @@
                     <h3>✅ Traitement terminé</h3>
                     <div id="debugInfo" class="debug-section hidden">
                         <h4>📊 Informations de traitement</h4>
-                        <div id="textContent" class="debug-section" style="margin-bottom: 15px;">
+                <div id="textContent" class="debug-section" style="margin-bottom: 15px;">
                             <h5>📄 Contenu du PDF extrait</h5>
                             <div id="textContainer"></div>
                         </div>
